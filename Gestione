@@ -1,0 +1,88 @@
+- 👋 Hi, I’m @Vitels
+- 👀 I’m interested in ...
+- 🌱 I’m currently learning ...
+- 💞️ I’m looking to collaborate on ...
+- 📫 How to reach me ...
+
+<!---
+Vitels/Vitels is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+You can click the Preview link to take a look at your changes.
+--->
+class Transazione:
+    def __init__(self, data, descrizione, importo):
+        self.data = data
+        self.descrizione = descrizione
+        self.importo = importo
+
+class SocietaSportiva:
+    def __init__(self, nome):
+        self.nome = nome
+        self.entrate = []
+        self.uscite = []
+
+    def registra_entrata(self, data, descrizione, importo):
+        transazione = Transazione(data, descrizione, importo)
+        self.entrate.append(transazione)
+
+    def registra_uscita(self, data, descrizione, importo):
+        transazione = Transazione(data, descrizione, importo)
+        self.uscite.append(transazione)
+
+    def calcola_bilancio(self):
+        entrate_totali = sum(transazione.importo for transazione in self.entrate)
+        uscite_totali = sum(transazione.importo for transazione in self.uscite)
+        bilancio = entrate_totali - uscite_totali
+        return bilancio
+
+    def genera_report_finanziario(self):
+        print(f"Report finanziario per {self.nome}:")
+        print("------------------------------")
+        print("ENTRATE:")
+        for transazione in self.entrate:
+            print(f"{transazione.data} - {transazione.descrizione}: {transazione.importo}€")
+        print("------------------------------")
+        print("USCITE:")
+        for transazione in self.uscite:
+            print(f"{transazione.data} - {transazione.descrizione}: {transazione.importo}€")
+        print("------------------------------")
+        bilancio = self.calcola_bilancio()
+        print(f"BILANCIO: {bilancio}€")
+
+# Funzione per interagire con l'utente e registrare le transazioni
+def gestisci_transazioni(societa):
+    while True:
+        print("Seleziona un'azione:")
+        print("1. Registra entrata")
+        print("2. Registra uscita")
+        print("3. Genera report finanziario")
+        print("4. Esci")
+        scelta = input("Scelta: ")
+
+        if scelta == "1":
+            data = input("Inserisci la data (YYYY-MM-DD): ")
+            descrizione = input("Inserisci una descrizione: ")
+            importo = float(input("Inserisci l'importo: "))
+            societa.registra_entrata(data, descrizione, importo)
+            print("Entrata registrata con successo.")
+
+        elif scelta == "2":
+            data = input("Inserisci la data (YYYY-MM-DD): ")
+            descrizione = input("Inserisci una descrizione: ")
+            importo = float(input("Inserisci l'importo: "))
+            societa.registra_uscita(data, descrizione, importo)
+            print("Uscita registrata con successo.")
+
+        elif scelta == "3":
+            societa.genera_report_finanziario()
+
+        elif scelta == "4":
+            break
+
+        else:
+            print("Scelta non valida. Riprova.")
+
+# Creazione di un'istanza della società sportiva
+societa = SocietaSportiva("ACME Sport")
+
+# Interazione con l'utente per la gestione delle transazioni
+gestisci_transazioni(societa)
